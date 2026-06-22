@@ -38,7 +38,7 @@ module atan2_phase (
     wire signed [15:0] q_scaled;
 
     wire [31:0] cartesian_data;
-    wire [23:0] cordic_phase_data;
+    wire signed [15:0] cordic_phase_data;
     wire        cordic_output_valid;
 
     // Extend the 13-bit inputs to 16 bits.
@@ -62,7 +62,7 @@ module atan2_phase (
     );
 
     // Convert the 18-bit circular phase to our 16-bit phase format.
-    assign phase_out   = cordic_phase_data[15:0];
+    assign phase_out = cordic_phase_data <<< 2;
     assign output_valid = cordic_output_valid;
 
 endmodule
