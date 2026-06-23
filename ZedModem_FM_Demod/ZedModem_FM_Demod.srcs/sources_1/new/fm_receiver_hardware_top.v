@@ -26,12 +26,14 @@ module fm_receiver_hardware_top (
     input  wire vauxp1,
     input  wire vauxn1,
 
-    output wire signed [15:0] audio_out,
-    output wire               audio_valid
+    output wire pwm_audio
 );
 
     wire [11:0] adc_code;
     wire        sample_valid;
+
+    wire signed [15:0] audio_out;
+    wire               audio_valid;
 
     xadc_sampler adc_sampler_inst (
         .clk(clk),
@@ -49,6 +51,14 @@ module fm_receiver_hardware_top (
         .adc_code(adc_code),
         .audio_out(audio_out),
         .audio_valid(audio_valid)
+    );
+
+    audio_pwm pwm_inst (
+        .clk(clk),
+        .rst(rst),
+        .audio_in(audio_out),
+        .audio_valid(audio_valid),
+        .pwm_out(pwm_audio)
     );
 
 endmodule
