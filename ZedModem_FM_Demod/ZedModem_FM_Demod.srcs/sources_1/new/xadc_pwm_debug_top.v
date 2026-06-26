@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 06/23/2026 12:41:16 PM
+// Create Date: 06/23/2026 05:08:20 PM
 // Design Name: 
-// Module Name: fm_receiver_hardware_top
+// Module Name: xadc_pwm_debug_top
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module fm_receiver_hardware_top (
+module xadc_pwm_debug_top (
     input  wire clk,
     input  wire rst,
 
@@ -29,15 +29,10 @@ module fm_receiver_hardware_top (
     output wire pwm_audio
 );
 
-    //wire [11:0] adc_code;
-    //wire        sample_valid;
+    wire [11:0] adc_code;
+    wire        sample_valid;
 
-    //wire signed [15:0] audio_out;
-    //wire               audio_valid;
-    (* mark_debug = "true" *) wire [11:0] adc_code;
-    (* mark_debug = "true" *) wire        sample_valid;
-    (* mark_debug = "true" *) wire signed [15:0] audio_out;
-    (* mark_debug = "true" *) wire        audio_valid;
+    wire signed [15:0] adc_as_audio;
 
     xadc_sampler adc_sampler_inst (
         .clk(clk),
@@ -48,20 +43,14 @@ module fm_receiver_hardware_top (
         .sample_valid(sample_valid)
     );
 
-    fm_receiver_audio receiver_inst (
-        .clk(clk),
-        .rst(rst),
-        .sample_valid(sample_valid),
-        .adc_code(adc_code),
-        .audio_out(audio_out),
-        .audio_valid(audio_valid)
-    );
+    // Convert 12-bit unsigned ADC code into signed 16-bit audio-like value.
+    assign adc_as_audio = {adc_code, 4'b0000} - 16'sd32768;
 
     audio_pwm pwm_inst (
         .clk(clk),
         .rst(rst),
-        .audio_in(audio_out),
-        .audio_valid(audio_valid),
+        .audio_in(adc_as_audio),
+        .audio_valid(sample_valid),
         .pwm_out(pwm_audio)
     );
 
