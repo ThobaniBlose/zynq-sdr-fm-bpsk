@@ -2,6 +2,10 @@
 set_property PACKAGE_PIN R8 [get_ports pwm_audio_0]
 set_property IOSTANDARD LVCMOS33 [get_ports pwm_audio_0]
 
+set_property PACKAGE_PIN F13 [get_ports vauxp1_0]
+set_property PACKAGE_PIN F14 [get_ports vauxn1_0]
+
+
 create_debug_core u_ila_0 ila
 set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
 set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
