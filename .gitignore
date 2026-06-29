@@ -1,0 +1,47 @@
+# Vivado project generated/build artifacts
+*.jou
+*.log
+*.str
+*.debug
+
+# Vivado runs (synthesis, implementation, bitstream)
+*.runs/
+
+# Vivado cache
+*.cache/
+
+# Vivado hardware files (bitstream outputs)
+*.hw/
+
+# Vivado IP user files (generated, not source)
+*.ip_user_files/
+
+# Simulation artifacts
+*.sim/
+
+# Vivado backup files
+*.bak
+
+# Vivado generated files inside .gen (IP output products)
+# Keep .gen/sources_1/ip/<ip_name>/*.xci (IP config) but ignore generated HDL
+*.gen/
+
+# Xilinx project backup
+*.xpr.bak
+
+# Binary/compiled outputs
+*.dcp
+*.bit
+*.bin
+*.ltx
+*.rpt
+*.vds
+*.pb
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Editor
+*.swp
+*~
