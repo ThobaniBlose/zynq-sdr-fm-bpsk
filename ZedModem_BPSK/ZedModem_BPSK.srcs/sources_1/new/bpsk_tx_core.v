@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module bpsk_tx_core #(
-    parameter CLKS_PER_SYMBOL = 1000,
-    parameter BIT_PATTERN     = 8'b10110010
+    parameter CLKS_PER_SYMBOL = 1000
+    //parameter BIT_PATTERN     = 8'b10110010
 )(
     input  wire clk,
     input  wire rst,
@@ -45,7 +45,7 @@ module bpsk_tx_core #(
         .rst(rst),
         .symbol_tick(symbol_tick)
     );
-
+/*
     bpsk_bit_source #(
         .BIT_PATTERN(BIT_PATTERN)
     ) bit_source (
@@ -54,7 +54,17 @@ module bpsk_tx_core #(
         .symbol_tick(symbol_tick),
         .current_bit(current_bit)
     );
-
+*/
+    // PRBS-7 source used for more realistic data testing
+    bpsk_prbs7_source #(
+        .SEED(7'b1011101)
+    ) prbs_source (
+        .clk(clk),
+        .rst(rst),
+        .symbol_tick(symbol_tick),
+        .current_bit(current_bit)
+    );
+    
     bpsk_modulator modulator (
         .carrier(carrier),
         .current_bit(current_bit),
