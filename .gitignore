@@ -1,0 +1,13 @@
+# STM32CubeIDE build output
+Debug/
+Release/
+*.su
+*.cyclo
+*.d
+*.o
+
+# STM32CubeIDE workspace metadata (machine-specific)
+.metadata/
+
+# Eclipse launch configurations (optional — remove line to track them)
+*.launch
