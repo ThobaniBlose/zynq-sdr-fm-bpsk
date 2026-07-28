@@ -1,10 +1,10 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xD3BD0DE00E539BB",
+      "boundary_crc": "0x530BB93F4BEE6338",
       "device": "xc7z007sclg225-1",
-      "gen_directory": "../../../../ZedModem_FM_Demod.gen/sources_1/bd/system_wrapper",
-      "name": "system_wrapper",
+      "gen_directory": "../../../../minized_433_tx_test.gen/sources_1/bd/system",
+      "name": "system",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
       "tool_version": "2024.2",
@@ -12,8 +12,8 @@
     },
     "design_tree": {
       "processing_system7_0": "",
-      "util_vector_logic_0": "",
-      "fm_receiver_hardware_0": ""
+      "proc_sys_reset_0": "",
+      "slow_data_gen_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -186,13 +186,7 @@
       }
     },
     "ports": {
-      "vauxp1_0": {
-        "direction": "I"
-      },
-      "vauxn1_0": {
-        "direction": "I"
-      },
-      "pwm_audio_0": {
+      "tx_data_out_0": {
         "direction": "O"
       }
     },
@@ -200,45 +194,34 @@
       "processing_system7_0": {
         "vlnv": "xilinx.com:ip:processing_system7:5.5",
         "ip_revision": "6",
-        "xci_name": "system_wrapper_processing_system7_0_0",
-        "xci_path": "ip\\system_wrapper_processing_system7_0_0_1\\system_wrapper_processing_system7_0_0.xci",
+        "xci_name": "system_processing_system7_0_0",
+        "xci_path": "ip\\system_processing_system7_0_0\\system_processing_system7_0_0.xci",
         "inst_hier_path": "processing_system7_0",
         "parameters": {
           "PCW_FPGA_FCLK0_ENABLE": {
             "value": "1"
-          },
-          "PCW_UIPARAM_GENERATE_SUMMARY": {
-            "value": "NONE"
           },
           "PCW_USE_M_AXI_GP0": {
             "value": "0"
           }
         }
       },
-      "util_vector_logic_0": {
-        "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
-        "ip_revision": "4",
-        "xci_name": "system_wrapper_util_vector_logic_0_0",
-        "xci_path": "ip\\system_wrapper_util_vector_logic_0_0_1\\system_wrapper_util_vector_logic_0_0.xci",
-        "inst_hier_path": "util_vector_logic_0",
-        "parameters": {
-          "C_OPERATION": {
-            "value": "not"
-          },
-          "C_SIZE": {
-            "value": "1"
-          }
-        }
+      "proc_sys_reset_0": {
+        "vlnv": "xilinx.com:ip:proc_sys_reset:5.0",
+        "ip_revision": "16",
+        "xci_name": "system_proc_sys_reset_0_0",
+        "xci_path": "ip\\system_proc_sys_reset_0_0\\system_proc_sys_reset_0_0.xci",
+        "inst_hier_path": "proc_sys_reset_0"
       },
-      "fm_receiver_hardware_0": {
-        "vlnv": "xilinx.com:module_ref:fm_receiver_hardware_top:1.0",
+      "slow_data_gen_0": {
+        "vlnv": "xilinx.com:module_ref:slow_data_gen:1.0",
         "ip_revision": "1",
-        "xci_name": "system_wrapper_fm_receiver_hardware_0_0",
-        "xci_path": "ip\\system_wrapper_fm_receiver_hardware_0_0_1\\system_wrapper_fm_receiver_hardware_0_0.xci",
-        "inst_hier_path": "fm_receiver_hardware_0",
+        "xci_name": "system_slow_data_gen_0_0",
+        "xci_path": "ip\\system_slow_data_gen_0_0\\system_slow_data_gen_0_0.xci",
+        "inst_hier_path": "slow_data_gen_0",
         "reference_info": {
           "ref_type": "hdl",
-          "ref_name": "fm_receiver_hardware_top",
+          "ref_name": "slow_data_gen",
           "boundary_crc": "0x0"
         },
         "ports": {
@@ -247,7 +230,7 @@
             "direction": "I",
             "parameters": {
               "ASSOCIATED_RESET": {
-                "value": "rst",
+                "value": "rstn",
                 "value_src": "constant"
               },
               "FREQ_HZ": {
@@ -255,28 +238,22 @@
                 "value_src": "user_prop"
               },
               "CLK_DOMAIN": {
-                "value": "system_wrapper_processing_system7_0_0_FCLK_CLK0",
+                "value": "system_processing_system7_0_0_FCLK_CLK0",
                 "value_src": "default_prop"
               }
             }
           },
-          "rst": {
+          "rstn": {
             "type": "rst",
             "direction": "I",
             "parameters": {
               "POLARITY": {
-                "value": "ACTIVE_HIGH",
-                "value_src": "ip_prop"
+                "value": "ACTIVE_LOW",
+                "value_src": "constant"
               }
             }
           },
-          "vauxp1": {
-            "direction": "I"
-          },
-          "vauxn1": {
-            "direction": "I"
-          },
-          "pwm_audio": {
+          "tx_data_out": {
             "direction": "O"
           }
         }
@@ -297,40 +274,29 @@
       }
     },
     "nets": {
-      "fm_receiver_hardware_0_pwm_audio": {
+      "proc_sys_reset_0_peripheral_aresetn": {
         "ports": [
-          "fm_receiver_hardware_0/pwm_audio",
-          "pwm_audio_0"
+          "proc_sys_reset_0/peripheral_aresetn",
+          "slow_data_gen_0/rstn"
         ]
       },
       "processing_system7_0_FCLK_CLK0": {
         "ports": [
           "processing_system7_0/FCLK_CLK0",
-          "fm_receiver_hardware_0/clk"
+          "proc_sys_reset_0/slowest_sync_clk",
+          "slow_data_gen_0/clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
         "ports": [
           "processing_system7_0/FCLK_RESET0_N",
-          "util_vector_logic_0/Op1"
+          "proc_sys_reset_0/ext_reset_in"
         ]
       },
-      "util_vector_logic_0_Res": {
+      "slow_data_gen_0_tx_data_out": {
         "ports": [
-          "util_vector_logic_0/Res",
-          "fm_receiver_hardware_0/rst"
-        ]
-      },
-      "vauxn1_0_1": {
-        "ports": [
-          "vauxn1_0",
-          "fm_receiver_hardware_0/vauxn1"
-        ]
-      },
-      "vauxp1_0_1": {
-        "ports": [
-          "vauxp1_0",
-          "fm_receiver_hardware_0/vauxp1"
+          "slow_data_gen_0/tx_data_out",
+          "tx_data_out_0"
         ]
       }
     }
