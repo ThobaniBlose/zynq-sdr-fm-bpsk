@@ -204,6 +204,15 @@ repository location.
 
 ---
 
+## Other Development Branch
+
+A separate STM32-related development branch is retained as:
+
+```text
+stm32-fm-demodulator
+```
+---
+
 ## Author
 
 Thobani Blose  
